@@ -25,7 +25,7 @@ export default async function IndexPage({
         <Search />
         
         <Link href="/add-dataset">
-          <Button className="mt-4">
+          <Button className="mt-5">
             Add Dataset
           </Button>
         </Link>

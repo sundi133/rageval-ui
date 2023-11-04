@@ -50,7 +50,9 @@ export default function PlaygroundPage() {
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Grid numItemsSm={1} numItemsLg={3} className="gap-12">
         <Search />
-        <Button className="mt-4" >Start Simulation</Button>
+        <Button className="mt-5" >
+          Start Simulation
+        </Button>
       </Grid>
     </main>
   );
