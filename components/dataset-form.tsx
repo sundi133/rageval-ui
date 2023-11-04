@@ -3,17 +3,17 @@ import '../app/globals.css';
 
 export default function DatasetForm() {
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [webLink, setWebLink] = useState('');
   const [crawlDepth, setCrawlDepth] = useState('');
-
   const [file, setFile] = useState(null);
   const [datasetType, setDatasetType] = useState('');
+  const [apiEndpoint, setApiEndpoint] = useState('');
 
   const handleSubmit = (e:any) => {
     e.preventDefault();
     // Handle form submission here
     console.log('Name:', name);
-    console.log('Description:', description);
+    console.log('Description:', webLink);
     console.log('File:', file); // You can handle the file upload here
     console.log('Dataset Type:', datasetType);
   };
@@ -27,37 +27,6 @@ export default function DatasetForm() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border rounded p-2"
-          />
-        </div>
-
-        
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Upload File:</label>
-          <input
-            type="file"
-            onChange={(e:any) => setFile(e.target.files[0])}
-            className="w-full border rounded p-2"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Web Link:</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full border rounded p-2"
-          />
-          
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Web Crawl Depth:</label>
-          <input
-            type="number"
-            value={crawlDepth}
-            onChange={(e) => setCrawlDepth(e.target.value)}
             className="w-full border rounded p-2"
           />
         </div>
@@ -76,9 +45,55 @@ export default function DatasetForm() {
             <option value="Type 4">Json</option>
             <option value="Type 5">Readme</option>
             <option value="Type 6">Web Link</option>
+            <option value="Type 7">Postgres</option>
+            <option value="Type 8">Mysql</option>
+            <option value="Type 9">API</option>
+
             {/* Add more dataset types as needed */}
           </select>
         </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Upload File:</label>
+          <input
+            type="file"
+            onChange={(e:any) => setFile(e.target.files[0])}
+            className="w-full border rounded p-2"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Web Link:</label>
+          <input
+            type="text"
+            value={webLink}
+            onChange={(e) => setWebLink(e.target.value)}
+            className="w-full border rounded p-2"
+          />
+          
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Web Crawl Depth:</label>
+          <input
+            type="number"
+            value={crawlDepth}
+            onChange={(e) => setCrawlDepth(e.target.value)}
+            className="w-full border rounded p-2"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">API Endpoint:</label>
+          <input
+            type="link"
+            value={apiEndpoint}
+            onChange={(e) => setApiEndpoint(e.target.value)}
+            className="w-full border rounded p-2"
+          />
+        </div>
+
+       
 
         <button type="submit" className="bg-blue-500 hover-bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Submit
