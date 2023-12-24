@@ -40,6 +40,5 @@ uvloop==0.19.0
 watchfiles==0.21.0
 websockets==12.0
 yarl==1.9.4
-wandb==0.15.12
 FastAPI-SQLAlchemy==0.2.1
 databases==0.8.0
