@@ -42,5 +42,4 @@ websockets==12.0
 yarl==1.9.4
 wandb==0.15.12
 FastAPI-SQLAlchemy==0.2.1
-psycopg2-binary==2.9.9
 databases==0.8.0
