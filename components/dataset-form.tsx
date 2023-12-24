@@ -30,19 +30,7 @@ export default function DatasetForm() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/user/${userId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch user data: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setOrgId(data.orgId);
+        setOrgId(session?.lastActiveOrganizationId ?? '');
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -82,7 +70,7 @@ export default function DatasetForm() {
       formData.append('model_name', modelName);
       formData.append('dataset_type', datasetType);
       // Send POST request to the API
-      const response = await axios.post('/rageval/generate/', formData);
+      const response = await axios.post('/api/generate/', formData);
   
       if (response.status === 200) {
         // Handle success

@@ -83,17 +83,17 @@ def get_db():
         db.close()
 
 
-@app.get("/rageval")
+@app.get("/api")
 def root():
     return {"status": "ok"}
 
 
-@app.get("/rageval/health/")
+@app.get("/api/health/")
 def health():
     return {"status": "pong"}
 
 
-@app.post("/rageval/generate/")
+@app.post("/api/generate/")
 async def generator(
     background_tasks: BackgroundTasks,
     name: str = Form(default=""),
@@ -228,7 +228,7 @@ class QADataResponse(BaseModel):
     reference_chunk: str
 
 
-@app.get("/rageval/search/dataset/", response_model=List[DatasetResponse])
+@app.get("/api/search/dataset/", response_model=List[DatasetResponse])
 async def get_dataset(
     search: str,
     org_id: str = Query("", max_length=1000, min_length=0),
@@ -247,7 +247,7 @@ async def get_dataset(
     return results
 
 
-@app.get("/rageval/list/dataset/", response_model=List[DatasetResponse])
+@app.get("/api/list/dataset/", response_model=List[DatasetResponse])
 async def get_dataset(
     org_id: str = Query("", max_length=1000, min_length=0),
     db: Session = Depends(get_db),
@@ -260,7 +260,7 @@ async def get_dataset(
     return results
 
 
-@app.get("/rageval/dataset/", response_model=DatasetResponse)
+@app.get("/api/dataset/", response_model=DatasetResponse)
 async def get_dataset(
     dataset_id: int,
     org_id: str = Query("", max_length=1000, min_length=0),
@@ -271,7 +271,7 @@ async def get_dataset(
     return results
 
 
-@app.get("/rageval/qa-data/", response_model=List[QADataResponse])
+@app.get("/api/qa-data/", response_model=List[QADataResponse])
 async def get_qa_data(
     dataset_id: int,
     org_id: str = Query("", max_length=1000, min_length=0),
@@ -289,7 +289,7 @@ async def get_qa_data(
     return results
 
 
-@app.get("/rageval/dataset/{gen_id}")
+@app.get("/api/dataset/{gen_id}")
 async def download(gen_id: str):
     """
     Downloads a dataset with the given `gen_id` and returns a FileResponse object if the dataset exists.
@@ -306,7 +306,7 @@ async def download(gen_id: str):
         return {"message": "Dataset not found"}
 
 
-@app.post("/rageval/evaluate/")
+@app.post("/api/evaluate/")
 async def evaluate(
     gen_id: str = Form(...),
     llm_endpoint: str = Form(...),
@@ -335,7 +335,7 @@ async def evaluate(
         return {"message": "Dataset with id {gen_id} not found"}
 
 
-@app.get("/rageval/ranking/{gen_id}")
+@app.get("/api/ranking/{gen_id}")
 async def ranked_reports(gen_id: str):
     """
     Downloads a dataset with the given `gen_id` and returns a FileResponse object if the dataset exists.
@@ -351,7 +351,7 @@ async def ranked_reports(gen_id: str):
         return {"message": "Ranked dataset not found"}
 
 
-@app.websocket("/rageval/ws")
+@app.websocket("/api/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     for i in range(10):

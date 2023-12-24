@@ -9,16 +9,8 @@ import { useState } from 'react';
 import DatasetForm from '../../components/dataset-form';
 import { Suspense } from 'react';
 import Navbar from '../../app/navbar';
-import { auth } from '../../app/auth';
+import { useClerk } from '@clerk/nextjs';
 
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-}
-
-  
 export default  function IndexPage({
   searchParams
 }: {

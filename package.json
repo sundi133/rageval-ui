@@ -2,14 +2,13 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "fastapi-dev": "pip3 install -r requirements.txt && python3 -m uvicorn rageval.service:app --reload --workers 3",
+    "fastapi-dev": "pip3 install -r requirements.txt && python3 -m uvicorn api.service:app --reload --workers 3",
     "next-dev": "next dev",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
-  "proxy": "http://127.0.0.1:8000",
   "dependencies": {
     "@clerk/clerk-react": "^4.30.2",
     "@clerk/nextjs": "^4.29.1",

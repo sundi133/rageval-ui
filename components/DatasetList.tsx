@@ -31,26 +31,14 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
       try {
         setIsLoading(true);
 
-        const response = await fetch(`/api/user/${userId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch user data: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setOrgId(data.orgId);
+        
+        setOrgId(session?.lastActiveOrganizationId ?? '');
         setSuccessMessage(1);
-        if (data.orgId) {
+        if (session?.lastActiveOrganizationId) {
           setUserMessage(
             `No dataset found. Why not create a new dataset? Click the button
             above to get started!`
           );
-          setOrgId(data.orgId);
         } else {
             setSuccessMessage(0);
             setUserMessage(
@@ -80,7 +68,7 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
         setIsLoading(true);
         if (searchTerm.trim() !== '') {
           const searchResponse = await axios.get(
-            `/rageval/search/dataset/`,{
+            `/api/search/dataset/`,{
                 params: {
                     org_id: session?.lastActiveOrganizationId,
                     search: searchTerm,
@@ -90,7 +78,7 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
           setDatasets(searchResults);
         } else {
           // If search term is empty, use the default API route
-          const response = await axios.get(`/rageval/list/dataset/`, {
+          const response = await axios.get(`/api/list/dataset/`, {
             params: {
                 org_id: session?.lastActiveOrganizationId,
             },
@@ -108,7 +96,9 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
         setIsLoading(false); // Data fetching failed
       }
     };
-    fetchData();
+    if(session && session?.lastActiveOrganizationId) {
+        fetchData();
+    }
   }, [searchTerm]);
 
   if (!session) {

@@ -39,7 +39,7 @@ const DatasetDetails = ({ datagen_id: datagen_id }) => {
         fetchDatasetDetails();
         fetchChatData();
     }, [session]);
-    
+
     if (!session) {
         return null;
     }
@@ -50,7 +50,7 @@ const DatasetDetails = ({ datagen_id: datagen_id }) => {
     const fetchChatData = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get('/rageval/qa-data', {
+            const response = await axios.get('/api/qa-data', {
             params: {
                 dataset_id: datagen_id,
                 org_id: session.lastActiveOrganizationId,
@@ -72,7 +72,7 @@ const DatasetDetails = ({ datagen_id: datagen_id }) => {
     const fetchDatasetDetails = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get('/rageval/dataset', {
+            const response = await axios.get('/api/dataset', {
                 params: {
                     dataset_id: datagen_id,
                     org_id: session.lastActiveOrganizationId,

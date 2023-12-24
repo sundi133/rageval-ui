@@ -17,8 +17,6 @@ export default async function handler(req, res) {
   }
   const name = user.firstName + ' ' + user.lastName;
 
-
-
   if (req.method === 'GET') {
     res.status(200).json({ok: true, orgId: orgId, creatorEmail: creatorEmail, name: name});
   } else {
