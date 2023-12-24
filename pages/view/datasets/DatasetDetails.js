@@ -106,7 +106,7 @@ const DatasetDetails = ({ datagen_id: datagen_id }) => {
 
                     <div>
                         <div className="bg-white rounded-lg shadow-md p-6 mb-4">
-                            <h2 className="text-xl font-bold mb-4 items-center justify-center">QA Data</h2>
+                            <h2 className="text-xl font-bold mb-4 items-center justify-center">QA Dataset</h2>
                             <div className="grid grid-cols-10 gap-2 text-sm">
                                 <div className="col-span-2">
                                     <div className="font-bold mb-2">Name:</div>
