@@ -156,6 +156,7 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
                 <th className={tableHeaderCellStyle}>Sample %</th>
                 <th className={tableHeaderCellStyle}>Chat Type</th>
                 <th className={tableHeaderCellStyle}>Model Used</th>
+                <th className={tableHeaderCellStyle}>Chunk Size</th>
                 <th className={tableHeaderCellStyle}>View</th>
                 </tr>
             </thead>
@@ -172,6 +173,7 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
                     <td className={tableBodyCellStyle}>{dataset.sample_size}</td>
                     <td className={tableBodyCellStyle}>{dataset.dataset_type}</td>
                     <td className={tableBodyCellStyle}>{dataset.model_name}</td>
+                    <td className={tableBodyCellStyle}>{dataset.chunk_size ?? 2000}</td>
                     <td className={tableBodyCellStyle}>
                         <Link href={`/view/datasets/${dataset.id}`} rel="noopener noreferrer">
                         <FontAwesomeIcon

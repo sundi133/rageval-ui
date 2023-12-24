@@ -26,7 +26,8 @@ export default function DatasetForm() {
   const { session } = useClerk();
   const [orgId, setOrgId] = useState<string>('');
   const [modelName, setModelName] = useState<string>('gpt-3.5-turbo');
-  
+  const [chunkSize, setChunkSize] = useState<number | 2000>(2000);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -69,6 +70,8 @@ export default function DatasetForm() {
       formData.append('orgId', orgId ?? '');
       formData.append('model_name', modelName);
       formData.append('dataset_type', datasetType);
+      formData.append('chunk_size', chunkSize.toString());
+      
       // Send POST request to the API
       const response = await axios.post('/api/generate/', formData);
   
@@ -285,6 +288,26 @@ export default function DatasetForm() {
             className="w-full border rounded p-2"
             min={1}
             max={100000}
+            required
+          />
+
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Split Chunk Size:</label>
+          <input
+            type="number"
+            value={chunkSize}
+            onChange={(e) => {
+              const newValue = Number(e.target.value);
+              if (newValue >= 1 && newValue <= 8000) {
+                setChunkSize(newValue);
+              } else {
+              }
+            }}
+            className="w-full border rounded p-2"
+            min={1}
+            max={8000}
             required
           />
 

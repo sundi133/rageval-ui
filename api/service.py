@@ -100,6 +100,7 @@ async def generator(
     userId: str = Form(default="-1"),
     orgId: str = Form(default="-1"),
     dataset_type: str = Form(default=""),
+    chunk_size: int = Form(default=2000, ge=1, le=8000),
     data_path: str = Form(default="", max_length=1000, min_length=0),
     number_of_questions: int = Form(default=5, ge=1, le=10000),
     sample_size: int = Form(default=5, ge=1, le=100),
@@ -155,6 +156,7 @@ async def generator(
             userid=userId,
             dataset_type=dataset_type,
             model_name=model_name,
+            chunk_size=chunk_size,
         )
 
         # Add the instance to the session and flush to generate the ID
@@ -216,6 +218,7 @@ class DatasetResponse(BaseModel):
     ts: datetime
     dataset_type: Optional[str]  # Allow dataset_type to be None
     model_name: Optional[str]  # Allow model_name to be None
+    chunk_size: Optional[int]  # Allow chunk_size to be None
 
 
 class QADataResponse(BaseModel):

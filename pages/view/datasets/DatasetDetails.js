@@ -28,6 +28,7 @@ const DatasetDetails = ({ datagen_id: datagen_id }) => {
     const [datasetTs, setDatasetTs] = useState('');
     const [expandedReference, setExpandedReference] = useState(false);
     const [numberOfQuestions, setNumberOfQuestions] = useState(0);
+    const [chunkSize, setChunkSize] = useState(0);
     const [sampleSize, setSampleSize] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const tableHeaderCellStyle =
@@ -84,7 +85,7 @@ const DatasetDetails = ({ datagen_id: datagen_id }) => {
             setDatasetTs(data.ts);
             setNumberOfQuestions(data.number_of_questions);
             setSampleSize(data.sample_size);
-
+            setChunkSize(data.chunk_size ?? 2000);
             
         } catch (error) {
             console.error('Error fetching dataset details:', error);
@@ -106,21 +107,25 @@ const DatasetDetails = ({ datagen_id: datagen_id }) => {
                     <div>
                         <div className="bg-white rounded-lg shadow-md p-6 mb-4">
                             <h2 className="text-xl font-bold mb-4 items-center justify-center">QA Data</h2>
-                            <div className="grid grid-cols-8 gap-4">
+                            <div className="grid grid-cols-10 gap-2 text-sm">
                                 <div className="col-span-2">
                                     <div className="font-bold mb-2">Name:</div>
                                     <div className="text-gray-700">{datasetName}</div>
                                 </div>
                                 <div className="col-span-2">
                                     <div className="font-bold mb-2">Created At:</div>
-                                    <div className="text-gray-700">{datasetTs}</div>
+                                    <div className="text-gray-700">{new Date(datasetTs).toString()}</div>
                                 </div>
                                 <div className="col-span-2">
-                                    <div className="font-bold mb-2">Number of Questions:</div>
+                                    <div className="font-bold mb-2">Questions Per Sample:</div>
                                     <div className="text-gray-700">{numberOfQuestions}</div>
                                 </div>
                                 <div className="col-span-2">
                                     <div className="font-bold mb-2">Sample Percentage:</div>
+                                    <div className="text-gray-700">{sampleSize} %</div>
+                                </div>
+                                <div className="col-span-2">
+                                    <div className="font-bold mb-2">Chunk Size:</div>
                                     <div className="text-gray-700">{sampleSize} %</div>
                                 </div>
                             </div>

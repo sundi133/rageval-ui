@@ -22,8 +22,8 @@ class Dataset(Base):
     chunk_size = Column(Integer)
     reference_chunk_max_distance = Column(Integer)
     ts = Column(DateTime, default=datetime.utcnow)
-    dataset_type = Column(String, is_nullable=True)
-    model_name = Column(String, is_nullable=True)
+    dataset_type = Column(String)
+    model_name = Column(String)
     # Define relationships
     qa_data = relationship("QAData", back_populates="dataset")
     evaluations = relationship("Evaluation", back_populates="dataset")
