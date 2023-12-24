@@ -71,7 +71,7 @@ export default function DatasetForm() {
       formData.append('model_name', modelName);
       formData.append('dataset_type', datasetType);
       formData.append('chunk_size', chunkSize.toString());
-      
+
       // Send POST request to the API
       const response = await axios.post('/api/generate/', formData);
   
@@ -323,7 +323,7 @@ export default function DatasetForm() {
         )}
 
         <button type="button"
-          className={`text-white text-sm p-2 mt-2 rounded ${isLoading ? 'bg-gray-500' : 'bg-gray-700'}`} 
+          className={`text-white text-sm p-2 mt-2 rounded ${isLoading ? 'bg-gray-500' : 'bg-gray-900'}`} 
           onClick={handleSubmit}
          >
           {isLoading ? 'Submitting...' : 'Submit'}
