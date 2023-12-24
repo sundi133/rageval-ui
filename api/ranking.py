@@ -6,17 +6,10 @@ import json
 import os
 import random
 
-from nltk.translate.bleu_score import sentence_bleu
-from nltk.translate.bleu_score import SmoothingFunction
-from nltk.translate.meteor_score import single_meteor_score
 from rouge_score import rouge_scorer
 
 from typing import List
 from .utils import read_endpoint_configurations, read_qa_data, get_llm_answer
-
-# Make sure NLTK data is downloaded (required for METEOR and ROUGE)
-nltk.download("wordnet")
-nltk.download("punkt")
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -69,26 +62,11 @@ async def evaluate_qa_data(
         logger.info(f"Answer: {reference_answer}")
         for endpoint_config in endpoint_configs:
             candidate = await get_llm_answer(question, endpoint_config)
-            # Tokenize the sentences into lists of words
-            reference_answer_tokens = nltk.word_tokenize(reference_answer.lower())
-            candidate_tokens = nltk.word_tokenize(candidate.lower())
-
-            # Calculate BLEU score
-            bleu_score_val = sentence_bleu(
-                [reference_answer_tokens],
-                candidate_tokens,
-                smoothing_function=SmoothingFunction().method4,
-            )
 
             # Calculate ROUGE-L score
             rouge_l_score_val = scorer.score(reference_answer, candidate)[
                 "rougeL"
             ].fmeasure
-
-            # Calculate METEOR score
-            meteor_score_val = single_meteor_score(
-                reference_answer.split(" "), candidate.split(" ")
-            )
 
             logger.info(
                 {
@@ -98,8 +76,6 @@ async def evaluate_qa_data(
                     "expected_response": reference_answer,
                     "endpoint_response": candidate,
                     "rouge_l_score": rouge_l_score_val,
-                    "bleu_score": bleu_score_val,
-                    "meteor_score": meteor_score_val,
                 }
             )
             question_ranking.append(
@@ -110,8 +86,6 @@ async def evaluate_qa_data(
                     "expected_response": reference_answer,
                     "endpoint_response": candidate,
                     "rouge_l_score": rouge_l_score_val,
-                    "bleu_score": bleu_score_val,
-                    "meteor_score": meteor_score_val,
                 }
             )
 
@@ -136,8 +110,6 @@ async def evaluate_qa_data(
                 "endpoint_name": ranking["endpoint_name"],
                 "url": ranking["url"],
                 "rouge_l_score": ranking["rouge_l_score"],
-                "bleu_score": ranking["bleu_score"],
-                "meteor_score": ranking["meteor_score"],
             }
         )
 
