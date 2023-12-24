@@ -1,4 +1,3 @@
-import { addCandidate } from '../../../components/prismaService';
 import { getAuth } from '@clerk/nextjs/server';
 import { clerkClient } from '@clerk/nextjs';
 

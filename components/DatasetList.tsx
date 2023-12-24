@@ -25,10 +25,7 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
   const { session } = useClerk();
   const [orgId, setOrgId] = useState<string>('');
 
-  if (!session) {
-    return null;
-  }
-
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -113,6 +110,10 @@ function DatasetList({ searchTerm }: { searchTerm: string }) {
     };
     fetchData();
   }, [searchTerm]);
+
+  if (!session) {
+    return null;
+  }
 
 
   const handleRowClick = (interview: any) => {
