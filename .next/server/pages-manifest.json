@@ -1,0 +1,10 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/add/dataset": "pages/add/dataset.js",
+  "/view/evaluation/[id]": "pages/view/evaluation/[id].js",
+  "/view/endpoints/[id]": "pages/view/endpoints/[id].js",
+  "/view/datasets/[id]": "pages/view/datasets/[id].js",
+  "/api/user": "pages/api/user.js"
+}

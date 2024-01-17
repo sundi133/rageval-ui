@@ -1,0 +1,45 @@
+{
+  "sortedMiddleware": [
+    "/"
+  ],
+  "middleware": {
+    "/": {
+      "files": [
+        "server/edge-runtime-webpack.js",
+        "server/middleware.js"
+      ],
+      "name": "middleware",
+      "page": "/",
+      "matchers": [
+        {
+          "regexp": "^/.*$",
+          "originalSource": "/:path*"
+        }
+      ],
+      "wasm": [],
+      "assets": []
+    }
+  },
+  "functions": {
+    "/api/auth/[...nextauth]/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/middleware-react-loadable-manifest.js",
+        "server/next-font-manifest.js",
+        "server/edge-runtime-webpack.js",
+        "server/app/api/auth/[...nextauth]/route.js"
+      ],
+      "name": "app/api/auth/[...nextauth]/route",
+      "page": "/api/auth/[...nextauth]/route",
+      "matchers": [
+        {
+          "regexp": "^/api/auth/(?<nextauth>.+?)$",
+          "originalSource": "/api/auth/[...nextauth]"
+        }
+      ],
+      "wasm": [],
+      "assets": []
+    }
+  },
+  "version": 2
+}
