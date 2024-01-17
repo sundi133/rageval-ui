@@ -1,5 +1,4 @@
 'use client'
-
 import { sql } from '@vercel/postgres';
 import { Card, Title, Text, Button, Grid } from '@tremor/react';
 import Link from 'next/link';
@@ -7,8 +6,9 @@ import { useClerk } from '@clerk/nextjs';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { use, useEffect, useState } from 'react';
 import '../globals.css';
+import SimulationList from '@/components/SimulationList';
 
-export default async function IndexPage({
+export default function IndexPage({
   searchParams
 }: {
   searchParams: { q: string };
@@ -49,7 +49,7 @@ export default async function IndexPage({
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
               </div>
             </div>
-            <Link href="/add/dataset">
+            <Link href="/add/simulator">
               <Button className="bg-gray-900 text-white hover:bg-gray-700 border-white hover:border-white pl-4">
                 <span className="relative inline-flex items-center">
                   <svg
@@ -71,6 +71,7 @@ export default async function IndexPage({
               </Button>
             </Link>
           </div>
+          <SimulationList searchTerm={searchTerm} />
         </main>
       ) : (
         <></>

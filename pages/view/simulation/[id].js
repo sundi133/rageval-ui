@@ -29,7 +29,7 @@ export default function IndexPage() {
   return (
     <main>
       <Navbar/>
-      <Details datagen_id={id} size='7xl' />        
+      <Details simulation_id={id} />        
     </main>
   );
 }

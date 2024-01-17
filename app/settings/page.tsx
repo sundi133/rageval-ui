@@ -114,10 +114,15 @@ export default function IndexPage({
                   </Button>
                 </Link>
 
-                <Link href="/openai-key">
+                {/* <Link href="/openai-key">
+                  <Button className="text-sm text-white bg-gray-900 border border-gray-900 flex items-center space-x-2 hover:bg-gray-700 hover:border-gray-900">
+                    <span>Add Openai Key</span>
+                  </Button>
+                </Link> */}
+                <Link href="/tokens">
                   <Button className="text-sm text-white bg-gray-900 border border-gray-900 flex items-center space-x-2 hover:bg-gray-700 hover:border-gray-900">
                     {/* <HomeModernIcon className="h-5 w-5" /> */}
-                    <span>Add Openai Key</span>
+                    <span>Show Tokens</span>
                   </Button>
                 </Link>
               </div>

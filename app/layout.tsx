@@ -8,9 +8,9 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import { useClerk } from '@clerk/nextjs';
 
 export const metadata = {
-  title: 'Bytegram: Redefining Interviews with Smart Assistance',
+  title: 'Rageval: An LLM Agent Evaluation Framework',
   description:
-    'A user friendly hiring companion to help you remove bias from interviews and make well informed hiring decisions'
+    'Rageval is an LLM agent evaluation framework that allows you to evaluate your agents in a variety of environments, personas and scenarios.'
 };
 
 export default function RootLayout({

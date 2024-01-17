@@ -3,7 +3,7 @@ import React from 'react';
 import { sql } from '@vercel/postgres';
 import { Card, Title, Text, Button, Grid } from '@tremor/react';
 import Link from 'next/link';
-import Details from './Details';
+import Details from './details';
 import { Suspense } from 'react';
 import Navbar from '../../../app/navbar';
 import { useRouter } from 'next/router';
@@ -29,7 +29,7 @@ export default function IndexPage() {
   return (
     <main>
       <Navbar/>
-      <Details datagen_id={id} size='7xl' />        
+      <Details evaluation_id={id} />        
     </main>
   );
 }

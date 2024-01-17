@@ -13,21 +13,20 @@ const nextConfig = {
       }
     ]
   },
-  rewrites: async () => {
-    return [
-      {
-        source: "/api/auth/session/:path*",
-        destination: "/api/auth/session/",
-      },
-      {
-        source: "/api/:path*",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/api/:path*"
-            : "/api/",
-      },
-    ];
-  },
+  // rewrites: async () => {
+  //   return [
+  //     {
+  //       source: "/api/auth/session/:path*",
+  //       destination: "/api/auth/session/",
+  //     },
+  //     {
+  //       source: "/api/:path*",
+  //       destination:"/api",
+  //     },
+  //   ];
+  // },
 };
+
+require('dotenv').config();
 
 module.exports = nextConfig;

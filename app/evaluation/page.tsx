@@ -7,8 +7,9 @@ import { useClerk } from '@clerk/nextjs';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { use, useEffect, useState } from 'react';
 import '../globals.css';
+import EvaluationList from '@/components/EvaluationList';
 
-export default async function IndexPage({
+export default function IndexPage({
   searchParams
 }: {
   searchParams: { q: string };
@@ -51,6 +52,7 @@ export default async function IndexPage({
             </div>
             
           </div>
+          <EvaluationList searchTerm={searchTerm} />
         </main>
       ) : (
         <></>

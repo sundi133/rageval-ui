@@ -7,6 +7,7 @@ import { useClerk } from '@clerk/nextjs';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { use, useEffect, useState } from 'react';
 import '../globals.css';
+import EndpointList from '@/components/EndpointList';
 
 export default async function IndexPage({
   searchParams
@@ -49,7 +50,7 @@ export default async function IndexPage({
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
               </div>
             </div>
-            <Link href="/add/dataset">
+            <Link href="/add/endpoint">
               <Button className="bg-gray-900 text-white hover:bg-gray-700 border-white hover:border-white pl-4">
                 <span className="relative inline-flex items-center">
                   <svg
@@ -71,6 +72,7 @@ export default async function IndexPage({
               </Button>
             </Link>
           </div>
+          <EndpointList searchTerm={searchTerm} />
         </main>
       ) : (
         <></>

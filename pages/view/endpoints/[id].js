@@ -29,7 +29,7 @@ export default function IndexPage() {
   return (
     <main>
       <Navbar/>
-      <Details datagen_id={id} size='7xl' />        
+      <Details llm_endpoint_id={id} />        
     </main>
   );
 }

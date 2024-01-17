@@ -3,10 +3,10 @@
 import { Fragment } from 'react';
 import { usePathname } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
-import { OrganizationSwitcher, useAuth } from '@clerk/nextjs';
+import { OrganizationSwitcher, UserProfile, useAuth } from '@clerk/nextjs';
 import { UserButton } from '@clerk/nextjs';
 import {
   ClerkProvider,
@@ -16,12 +16,12 @@ import {
 } from '@clerk/nextjs';
 
 const navigation = [
-  { name: 'Data Generation', href: '/' },
-  { name: 'LLM Hub', href: '/llmhub' },
-  { name: 'Chat Simulator', href: '/simulate' },
-  { name: 'Evaluation', href: '/evaluation' },
-  { name: 'CICD', href: '/cicd' },
-  { name: 'Settings', href: '/settings' }
+  { name: 'Data Generation', href: '/', path: ["/add/dataset", "/view/datasets"] },
+  { name: 'LLM Hub', href: '/llmhub', path: ["/add/endpoint", "/view/endpoints"] },
+  { name: 'Chat Simulator', href: '/simulate', path: ["/add/simulator", "/view/simulation/"] },
+  { name: 'Evaluation', href: '/evaluation', path: ["/view/evaluation", ] },
+  { name: 'CICD', href: '/cicd', path: ["/cicd"] },
+  { name: 'Settings', href: '/settings', path: ["/settings", "/tokens", "/openai-key"] }
 ];
 
 function classNames(...classes: string[]) {
@@ -57,13 +57,13 @@ export default function Navbar() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          pathname === item.href
+                          item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href
                             ? 'border-slate-500 text-gray-900'
                             : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
                           'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'
                         )}
                         aria-current={
-                          pathname === item.href ? 'page' : undefined
+                          item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href ? 'page' : undefined
                         }
                       >
                         {item.name}
@@ -83,10 +83,12 @@ export default function Navbar() {
                       <span className="text-xs text-gray-700 whitespace-nowrap"></span>
                       <div className="h-8 w-8 rounded-full text-white text-center flex items-center justify-center">
                         <SignedIn>
-                          {/* <span className="mr-2 mt-2">
-                            <OrganizationSwitcher afterSelectOrganizationUrl="/" />
-                          </span> */}
-                          <UserButton afterSignOutUrl="/sign-in" />
+                          
+                          <UserButton 
+                          afterSignOutUrl="/sign-in"
+                          showName={true}
+                          />
+                          
                         </SignedIn>
                         <SignedOut>
                           {/* Signed out users get sign in button */}
@@ -106,9 +108,9 @@ export default function Navbar() {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {userId ? (
-                        <Menu.Item></Menu.Item>
+                        <Menu.Item as="div"></Menu.Item>
                       ) : (
-                        <Menu.Item></Menu.Item>
+                        <Menu.Item as="div"></Menu.Item>
                       )}
                     </Menu.Items>
                   </Transition>
@@ -136,12 +138,12 @@ export default function Navbar() {
                     as="a"
                     href={item.href}
                     className={classNames(
-                      pathname === item.href
+                      item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href
                         ? 'bg-slate-50 border-slate-500 text-slate-700'
                         : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800',
                       'block pl-3 pr-4 py-2 border-l-4 text-base font-medium'
                     )}
-                    aria-current={pathname === item.href ? 'page' : undefined}
+                    aria-current={item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href ? 'page' : undefined}
                   >
                     {item.name}
                   </Disclosure.Button>
