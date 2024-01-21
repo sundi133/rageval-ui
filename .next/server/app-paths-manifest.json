@@ -1,8 +1,18 @@
 {
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/page": "app/page.js",
-  "/tokens/page": "app/tokens/page.js",
+  "/_not-found": "app/_not-found.js",
+  "/cicd/page": "app/cicd/page.js",
+  "/create-organization/[[...create-organization]]/page": "app/create-organization/[[...create-organization]]/page.js",
   "/llmhub/page": "app/llmhub/page.js",
   "/evaluation/page": "app/evaluation/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/openai-key/page": "app/openai-key/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/organization-profile/[[...organization-profile]]/page": "app/organization-profile/[[...organization-profile]]/page.js",
+  "/organization-switcher/[[...organization-switcher]]/page": "app/organization-switcher/[[...organization-switcher]]/page.js",
+  "/page": "app/page.js",
+  "/simulate/page": "app/simulate/page.js",
+  "/tokens/page": "app/tokens/page.js",
+  "/settings/page": "app/settings/page.js",
+  "/sign-in/page": "app/sign-in/page.js",
+  "/sign-up/[[...sign-up]]/page": "app/sign-up/[[...sign-up]]/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
 }

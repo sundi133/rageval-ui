@@ -143,7 +143,7 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
                     <th className={tableHeaderCellStyle}>Timestamp</th>
                     <th className={tableHeaderCellStyle}>Id</th>
                     <th className={tableHeaderCellStyle}>Score</th>
-                    <th className={tableHeaderCellStyle}>Simulation</th>
+                    <th className={tableHeaderCellStyle}>Evaluation</th>
                     <th className={tableHeaderCellStyle}>Dataset</th>
                     <th className={tableHeaderCellStyle}>Endpoint</th>
                     <th className={tableHeaderCellStyle}>Status</th>

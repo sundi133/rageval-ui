@@ -1,4 +1,3 @@
-'use client'
 import React from 'react';
 import { sql } from '@vercel/postgres';
 import { Card, Title, Text, Button, Grid } from '@tremor/react';

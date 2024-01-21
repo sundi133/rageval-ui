@@ -4,9 +4,10 @@ import dynamic from 'next/dynamic';
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const LineChart = ({ data_series, title }) => {
-  
-  console.log(data_series);
 
+  if (!data_series || !data_series.length || !data_series[0].data) {
+    return <div>No data available</div>;
+  }
   const options = {
     chart: {
       type: 'line'

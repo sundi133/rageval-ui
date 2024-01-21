@@ -84,7 +84,6 @@ const DatasetDetails = ({ simulation_id: simulation_id }) => {
     }
 
     const triggerSimulation = async () => {
-        console.log("Triggering simulation");
 
         try {
             setIsLoading(true);
@@ -99,7 +98,7 @@ const DatasetDetails = ({ simulation_id: simulation_id }) => {
             if (response.status === 200) {
                 // Handle success
                 const data = response.data;
-                setSuccessMessage(`Simulation id ${data.simulation_id} triggered successfully.`);
+                setSuccessMessage(`Evaluation id ${data.simulation_id} triggered successfully.`);
 
             } else {
                 // Handle error
@@ -123,7 +122,7 @@ const DatasetDetails = ({ simulation_id: simulation_id }) => {
 
                     <div>
                         <div className="bg-white rounded-lg shadow-md p-6 mb-4">
-                            <h2 className="text-xl font-bold mb-4 items-center justify-center">Simulation {name}</h2>
+                            <h2 className="text-xl font-bold mb-4 items-center justify-center">Evaluation {name}</h2>
                             <div className="grid grid-cols-8 gap-2 text-sm">
                                 <div className="col-span-2">
                                     <div className="font-bold mb-2">Created At:</div>

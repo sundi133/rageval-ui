@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // You need to install axios if not already installed
 import '../app/globals.css';
@@ -33,7 +35,7 @@ function SimulationList({ searchTerm }: { searchTerm: string }) {
         setSuccessMessage(1);
         if (session?.lastActiveOrganizationId) {
           setUserMessage(
-            `No simulations found. Why not create a new one ? Add a simiulation to get started in above button`
+            `No evaluations found. Why not create a new one ? Add a evaluation to get started in above button`
           );
         } else {
             setSuccessMessage(0);
@@ -79,7 +81,6 @@ function SimulationList({ searchTerm }: { searchTerm: string }) {
                 limit: 100,
             },
           });
-          console.log(response.data);
           setSimulations(response.data);
         }
         setIsLoading(false); // Data has been fetched
@@ -164,7 +165,7 @@ function SimulationList({ searchTerm }: { searchTerm: string }) {
                                 d="M12 4.5v15m7.5-7.5h-15"
                             />
                             </svg>
-                            &nbsp; Create Simulation
+                            &nbsp; Create Evaluation
                         </span>
                     </button>
                 </Link>
@@ -177,8 +178,8 @@ function SimulationList({ searchTerm }: { searchTerm: string }) {
             <thead>
                 <tr>
                     <th className={tableHeaderCellStyle}>Timestamp</th>
-                    <th className={tableHeaderCellStyle}>Simulation Id</th>
-                    <th className={tableHeaderCellStyle}>Simulation Name</th>
+                    <th className={tableHeaderCellStyle}>Evaluation Id</th>
+                    <th className={tableHeaderCellStyle}>Evaluation Name</th>
                     <th className={tableHeaderCellStyle}>Number of Users</th>
                     <th className={tableHeaderCellStyle}>Dataset</th>
                     <th className={tableHeaderCellStyle}>Endpoint</th>
@@ -231,7 +232,7 @@ function SimulationList({ searchTerm }: { searchTerm: string }) {
                         <td colSpan={6} className={tableBodyCellStyle}>
                           {/* Display additional details based on the selected interview */}
                           <div>
-                            <strong>Simulation ID:</strong> {simulation.simulation_id}
+                            <strong>Evaluation ID:</strong> {simulation.simulation_id}
                           </div>
                           <div>
                             <strong>Average Score:</strong> {simulation.average_score}
@@ -243,7 +244,7 @@ function SimulationList({ searchTerm }: { searchTerm: string }) {
                             <strong>Endpoint Name:</strong> {simulation.endpoint_name}
                           </div>
                           <div>
-                            <strong>Simulation Name:</strong> {simulation.simulation_name}
+                            <strong>Evaluation Name:</strong> {simulation.simulation_name}
                           </div>
                         </td>
                       </tr>

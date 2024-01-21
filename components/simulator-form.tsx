@@ -20,7 +20,7 @@ const generateRandomName = () => {
         'Discoverer',
     ];
     const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-    return `Chat Simulation ${randomNoun}`;
+    return `Chat Evaluation ${randomNoun}`;
 };
 
 export default function DatasetForm() {
@@ -175,7 +175,7 @@ export default function DatasetForm() {
                     >
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
-                                Name:
+                               Evaluation Name:
                             </label>
                             <input
                                 type="text"
@@ -356,7 +356,7 @@ export default function DatasetForm() {
                         <p className="text-red-500 text-sm mt-4">{errorMsg}</p>
                     )}
                     <Button
-                        className="mt-2 fixed text-white text-sm bottom-4 transform bg-gray-900 text-white hover:bg-gray-700 border-white hover:border-white py-2 px-4 rounded"
+                        className="fixed justify-center text-white text-sm bottom-4 transform bg-gray-900 text-white hover:bg-gray-700 border-white hover:border-white rounded"
                         style={{ zIndex: 1000 }}
                         disabled={isLoading}
                         onClick={handleSubmit}

@@ -5,7 +5,7 @@ import LineChart from './line-chart';
 export function Dashboard(
   { number_of_evaluations, mean_score, distinct_users_simulated, evaluations, total_simulations }
   ) {
-    const data = evaluations.map(evaluation => {
+    const data = evaluations ? evaluations.map(evaluation => {
       const date = new Date(evaluation.last_updated).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
@@ -21,7 +21,7 @@ export function Dashboard(
         simulationRunId: evaluation.simulation_run_id
         // Include other fields as needed
       };
-    });
+    }):[];
     
     
   if (data.length > 0) {
@@ -45,11 +45,11 @@ export function Dashboard(
   }
   return (
     <div className="container">
-      <h1 className="text-3xl font-bold px-8">Evaluation Dashboard</h1>
+      <h1 className="text-3xl font-bold px-8">Assesement Dashboard</h1>
       <div className="flex flex-wrap mt-8 gap-2 px-8">
         <div className="card bg-gradient-to-r from-gray-700 to-gray-900 text-white p-6 rounded-xl shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
           <div className="flex items-center justify-between">
-            <span className="text-sm">Total QA / Simulation</span>      
+            <span className="text-sm">Total QA / Evaluation</span>      
           </div>
           <h2 className="text-2xl font-bold mt-2">{number_of_evaluations}</h2>
         </div>
@@ -61,7 +61,7 @@ export function Dashboard(
         </div>
         <div className="card bg-gradient-to-r from-gray-700 to-gray-900 text-white p-6 rounded-xl shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
           <div className="flex items-center justify-between">
-            <span className="text-sm">Total Simulations</span>
+            <span className="text-sm">Total Evaluations</span>
           </div>
           <h2 className="text-2xl font-bold mt-2">{total_simulations}</h2>
         </div>

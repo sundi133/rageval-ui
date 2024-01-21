@@ -194,7 +194,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                             
                             <div className="flex items-center space-x-2">
                                 <label htmlFor="simulationRunIdSelect" className="font-bold">
-                                    Select Simulation Run ID:
+                                    Select Evaluation Run ID:
                                 </label>
                                 <select
                                     id="simulationRunIdSelect"
@@ -242,7 +242,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                                     <div className="text-gray-700">{endpoint_name}</div>
                                 </div>
                                 <div className="col-span-2">
-                                    <div className="font-bold mb-2">Simulation:</div>
+                                    <div className="font-bold mb-2">Evaluation Name:</div>
                                     <div className="text-blue-500">
                                         <Link href={`/view/simulation/${simulation_id}`}>
                                             {simulation_name}
