@@ -18,8 +18,8 @@ import {
 const navigation = [
   { name: 'Data Generation', href: '/', path: ["/add/dataset", "/view/datasets"] },
   { name: 'LLM Hub', href: '/llmhub', path: ["/add/endpoint", "/view/endpoints"] },
-  { name: 'Chat Simulator', href: '/simulate', path: ["/add/simulator", "/view/simulation/"] },
-  { name: 'Evaluation', href: '/evaluation', path: ["/view/evaluation", ] },
+  { name: 'Evaluation', href: '/simulate', path: ["/add/simulator", "/view/simulation/"] },
+  { name: 'Assessment', href: '/evaluation', path: ["/view/evaluation", ] },
   { name: 'CICD', href: '/cicd', path: ["/cicd"] },
   { name: 'Settings', href: '/settings', path: ["/settings", "/tokens", "/openai-key"] }
 ];

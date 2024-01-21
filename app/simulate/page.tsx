@@ -66,7 +66,7 @@ export default function IndexPage({
                       d="M12 4.5v15m7.5-7.5h-15"
                     />
                   </svg>
-                  &nbsp; New Simulation
+                  &nbsp; New Evaluation
                 </span>
               </Button>
             </Link>

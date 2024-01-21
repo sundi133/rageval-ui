@@ -10,7 +10,7 @@ import '../app/globals.css';
 import DatasetList from '../components/DatasetList';
 import { ClerkLoaded, ClerkProvider } from "@clerk/nextjs";
 
-export default async function IndexPage({
+export default function IndexPage({
   searchParams
 }: {
   searchParams: { q: string };

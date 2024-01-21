@@ -9,7 +9,7 @@ import { use, useEffect, useState } from 'react';
 import '../globals.css';
 import EndpointList from '@/components/EndpointList';
 
-export default async function IndexPage({
+export default function IndexPage({
   searchParams
 }: {
   searchParams: { q: string };
