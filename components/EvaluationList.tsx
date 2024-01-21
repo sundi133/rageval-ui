@@ -174,7 +174,7 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
                             {(!evaluation.status || evaluation.status === "") && ""}
                         </td>
                         <td className={tableBodyCellStyle}>
-                            <Link href={`/view/evaluation/${evaluation.evaluation_id}`} rel="noopener noreferrer">
+                            <Link href={`/view/evaluation/${evaluation.evaluation_profile_id}`} rel="noopener noreferrer">
                             <FontAwesomeIcon
                                 icon={faChevronRight}
                                 className="text-sm text-gray-900 hover:text-blue-500"
@@ -189,7 +189,7 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
                         <td colSpan={6} className={tableBodyCellStyle}>
                           {/* Display additional details based on the selected interview */}
                           <div>
-                            <strong>Simulation ID:</strong> {evaluation.simulation_id}
+                            <strong>Simulation ID:</strong> {evaluation.evaluation_profile_id}
                           </div>
                           <div>
                             <strong>Average Score:</strong> {evaluation.average_score}

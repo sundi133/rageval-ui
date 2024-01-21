@@ -37,9 +37,9 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
     const [ expandedReference, setExpandedReference] = useState(false);
     const [ distinct_users, setDistinctUsers] = useState(0);
     const [ formSubmitted, setFormSubmitted ] = useState(false);
-    const [evaluationRunsScoreData, setEvaluationRunsScoreData] = useState([]);
-    const [simulation_run_id, setSimulationRunId] = useState(null);
-    const [simulation_run_ids, setSimulationRunIds] = useState([]);
+    const [ evaluationRunsScoreData, setEvaluationRunsScoreData] = useState([]);
+    const [ run_id, setRunId] = useState(null);
+    const [ run_ids, setRunIds] = useState([]);
     const tableHeaderCellStyle =
     'px-4 py-2 leading-5 text-center bg-gray-50 text-sm text-gray-900 tracking-wider';
     
@@ -53,7 +53,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
     const [scoreFilter, setScoreFilter] = useState(0);
 
     const handleSimulationRunIdChange = (event) => {
-        setSimulationRunId(event.target.value);
+        setRunId(event.target.value);
     };
 
     // Function to toggle sorting order
@@ -74,23 +74,23 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
 
     const fetchChatData = async () => {
         try {
-            if (!simulation_run_id)
+            if (!run_id)
                 return;
             setFormSubmitted(true);
             setIsLoading(true);
             const response = await axios.get(`${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/evaluation/chat`, {
             params: {
-                evaluation_id: evaluation_id,
                 org_id: session.lastActiveOrganizationId,
                 user_id: userId,
                 skip: 0,  // Your desired skip value
                 limit: 100,  // Your desired limit value
                 filter_score: scoreFilter,
-                simulation_run_id: parseInt(simulation_run_id),
+                run_id: parseInt(run_id),
             },
             });
 
             const data = response.data;
+            console.log(data); // Handle the retrieved data as needed
             setQaData(data);
         } catch (error) {
             console.error('Error fetching QA data:', error);
@@ -108,13 +108,12 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                 params: {
                     user_id: userId,
                     org_id: session.lastActiveOrganizationId,
-                    evaluation_id: evaluation_id,
-                    org_id: session.lastActiveOrganizationId,
+                    evaluation_profile_id: evaluation_id,
                 },
             });
             const data = response.data[0];
             setSimulationName(data.simulation_name);
-            setSimulationId(data.simulation_id);
+            setSimulationId(data.evaluation_profile_id);
             setLastUpdated(data.last_updated);
             setNumberOfEvaluations(data.number_of_evaluations);
             setAverageScore(data.average_score);
@@ -122,9 +121,10 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
             setEndpointName(data.endpoint_name);
             setDistinctUsers(data.distinct_users);
             setEvaluationRunsScoreData(response.data);
-            setSimulationRunIds(response.data.map((data) => data.simulation_run_id));
-            if (!simulation_run_id) {
-                setSimulationRunId(response.data[0].simulation_run_id);
+            setRunIds(response.data.map((data) => data.run_id));
+            console.log(response.data);
+            if (!run_id) {
+                setRunId(response.data[0].run_id);
             }
         } catch (error) {
             console.error('Error fetching dataset details:', error);
@@ -154,8 +154,9 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
     useEffect(() => {
         fetchEvaluationDetails();
         fetchChatData();
-        setSimulationRunId(simulation_run_id);
-    }, [session, simulation_run_id, scoreFilter]);
+        console.log(run_id);
+        setRunId(run_id);
+    }, [session, run_id, scoreFilter]);
 
     if (!session) {
         return null;
@@ -176,13 +177,13 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                     <div>
                         
                         <div className="mb-6 flex items-center space-x-4 bg-white p-4 rounded-lg shadow-md">
-                            { simulation_run_ids.length > 0 && (
+                            { run_ids.length > 0 && (
                                 <Dashboard 
                                 number_of_evaluations={number_of_evaluations}
                                 mean_score={average_score.toFixed(4)}
                                 distinct_users_simulated={distinct_users}
                                 evaluations={evaluationRunsScoreData}
-                                total_simulations={simulation_run_ids.length}
+                                total_simulations={run_ids.length}
                                 />
                             )}
                         </div>
@@ -199,11 +200,11 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                                 <select
                                     id="simulationRunIdSelect"
                                     onChange={handleSimulationRunIdChange}
-                                    value={simulation_run_id}
+                                    value={run_id}
                                     className="border border-gray-300 rounded-md w-36 py-1 text-sm text-gray-700 bg-white hover:border-blue-500 focus:border-blue-500"
                                 >
                                     <option value="">Select Run ID</option>
-                                    {simulation_run_ids.map(runId => (
+                                    {run_ids.map(runId => (
                                         <option key={runId} value={runId}>{runId}</option>
                                     ))}
                                 </select>
@@ -251,7 +252,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                                 </div>
                                 <div className="col-span-2">
                                     <div className="font-bold mb-2">Selected Sim Run Id:</div>
-                                    <div className="text-gray-700">{simulation_run_id}</div>
+                                    <div className="text-gray-700">{run_id}</div>
                                 </div>
                             </div>
                             
@@ -307,6 +308,8 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                                                             <br/>
                                                             <strong>Score: </strong>{' '}
                                                             {data.score.toFixed(4)}
+                                                            <br/>
+                                                            <strong>Score Reason:</strong> {data.score_reason ?? ''}
                                                         </li>
                                                     )}
                                                     {JSON.parse(data.chat_messages).question_answer &&
@@ -324,6 +327,8 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                                                                     <br/>
                                                                     <strong>Score: </strong>{' '}
                                                                     {data.score.toFixed(4)}
+                                                                    <br/>
+                                                                    <strong>Score Reason:</strong> {data.score_reason ?? ''}
                                                                 </li>
                                                             )
                                                         ))}
