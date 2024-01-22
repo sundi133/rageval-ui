@@ -12,7 +12,7 @@ const nextConfig = {
         hostname: 'avatar.vercel.sh'
       }
     ]
-  },
+  }
   // rewrites: async () => {
   //   return [
   //     {

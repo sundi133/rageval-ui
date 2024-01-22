@@ -1,18 +1,18 @@
 {
   "/_not-found": "app/_not-found.js",
+  "/assessment/page": "app/assessment/page.js",
   "/cicd/page": "app/cicd/page.js",
-  "/evaluation/page": "app/evaluation/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/create-organization/[[...create-organization]]/page": "app/create-organization/[[...create-organization]]/page.js",
-  "/organization-profile/[[...organization-profile]]/page": "app/organization-profile/[[...organization-profile]]/page.js",
   "/llmhub/page": "app/llmhub/page.js",
   "/openai-key/page": "app/openai-key/page.js",
-  "/organization-switcher/[[...organization-switcher]]/page": "app/organization-switcher/[[...organization-switcher]]/page.js",
-  "/sign-in/page": "app/sign-in/page.js",
+  "/organization-profile/[[...organization-profile]]/page": "app/organization-profile/[[...organization-profile]]/page.js",
   "/page": "app/page.js",
+  "/evaluation/page": "app/evaluation/page.js",
+  "/organization-switcher/[[...organization-switcher]]/page": "app/organization-switcher/[[...organization-switcher]]/page.js",
   "/settings/page": "app/settings/page.js",
   "/sign-up/[[...sign-up]]/page": "app/sign-up/[[...sign-up]]/page.js",
-  "/simulate/page": "app/simulate/page.js",
+  "/sign-in/page": "app/sign-in/page.js",
   "/tokens/page": "app/tokens/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
 }

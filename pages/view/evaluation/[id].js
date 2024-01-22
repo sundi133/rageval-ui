@@ -2,7 +2,7 @@ import React from 'react';
 import { sql } from '@vercel/postgres';
 import { Card, Title, Text, Button, Grid } from '@tremor/react';
 import Link from 'next/link';
-import Details from './details';
+import Details from './Details';
 import { Suspense } from 'react';
 import Navbar from '../../../app/navbar';
 import { useRouter } from 'next/router';
@@ -21,15 +21,14 @@ export default function IndexPage() {
     return null;
   }
 
-  if(!id) {
-    return <div>Loading...</div>
+  if (!id) {
+    return <div>Loading...</div>;
   }
 
   return (
     <main className={`mx-auto max-w-7xl`}>
-      <Navbar/>
-      <Details evaluation_id={id} />        
+      <Navbar />
+      <Details simulation_id={id} />
     </main>
   );
 }
-

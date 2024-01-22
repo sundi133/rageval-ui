@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { sql } from '@vercel/postgres';
 import { Card, Title, Text, Button, Grid } from '@tremor/react';
@@ -11,18 +11,15 @@ import { Suspense } from 'react';
 import Navbar from '../../app/navbar';
 import { useClerk } from '@clerk/nextjs';
 
-export default  function IndexPage({
+export default function IndexPage({
   searchParams
 }: {
   searchParams: { q: string };
 }) {
-  
-
   return (
     <main className={`mx-auto max-w-7xl`}>
-      <Navbar/>
-      <DatasetForm />        
+      <Navbar />
+      <DatasetForm />
     </main>
   );
 }
-

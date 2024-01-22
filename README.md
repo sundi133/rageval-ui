@@ -1,7 +1,6 @@
-
 ## Overview
 
-This is a UI for backend of openeval 
+This is a UI for backend of openeval
 
 Run the following commands to start the development server:
 

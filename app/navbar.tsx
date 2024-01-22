@@ -16,12 +16,28 @@ import {
 } from '@clerk/nextjs';
 
 const navigation = [
-  { name: 'Data Generation', href: '/', path: ["/add/dataset", "/view/datasets"] },
-  { name: 'LLM Hub', href: '/llmhub', path: ["/add/endpoint", "/view/endpoints"] },
-  { name: 'Evaluation', href: '/simulate', path: ["/add/simulator", "/view/simulation/"] },
-  { name: 'Assessment', href: '/evaluation', path: ["/view/evaluation", ] },
-  { name: 'CICD', href: '/cicd', path: ["/cicd"] },
-  { name: 'Settings', href: '/settings', path: ["/settings", "/tokens", "/openai-key"] }
+  {
+    name: 'Data Generation',
+    href: '/',
+    path: ['/add/dataset', '/view/datasets']
+  },
+  {
+    name: 'LLM Hub',
+    href: '/llmhub',
+    path: ['/add/endpoint', '/view/endpoints']
+  },
+  {
+    name: 'Evaluation',
+    href: '/evaluation',
+    path: ['/add/evaluation', '/view/evaluation/']
+  },
+  { name: 'Assessment', href: '/assessment', path: ['/view/assessment'] },
+  { name: 'CICD', href: '/cicd', path: ['/cicd'] },
+  {
+    name: 'Settings',
+    href: '/settings',
+    path: ['/settings', '/tokens', '/openai-key']
+  }
 ];
 
 function classNames(...classes: string[]) {
@@ -44,11 +60,40 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center">
-                <svg width="64px" height="64px" viewBox="-389.12 -389.12 1802.24 1802.24" 
-                  className="icon" 
-                  version="1.1" 
-                  xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" strokeWidth="0.01024"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC" strokeWidth="4.096"></g><g id="SVGRepo_iconCarrier"><path d="M304 592h416l104 296h-624L304 592z m328 128c12.8 0 24-11.2 24-24s-11.2-24-24-24-24 11.2-24 24 11.2 24 24 24z m-256-48c12.8 0 24-11.2 24-24s-11.2-24-24-24-24 11.2-24 24 11.2 24 24 24z m136 112c9.6 0 16-6.4 16-16s-6.4-16-16-16-16 6.4-16 16 6.4 16 16 16z m8-256c-12.8 0-24-11.2-24-24s11.2-24 24-24 24 11.2 24 24-11.2 24-24 24z m104 48c-9.6 0-16-6.4-16-16s6.4-16 16-16 16 6.4 16 16-6.4 16-16 16z" fill="#1e1721"></path><path d="M622.4 112H401.6c9.6 76.8 14.4 142.4 14.4 176 0 35.2-65.6 248-200 592h593.6C673.6 536 608 323.2 608 288c0-33.6 4.8-99.2 14.4-176z m32 0c-9.6 78.4-14.4 144-14.4 176 0 28.8 67.2 248 198.4 580.8 1.6 3.2 1.6 8 1.6 11.2 0 17.6-14.4 32-32 32H214.4c-4.8 0-8 0-11.2-1.6-16-6.4-24-25.6-17.6-41.6C316.8 536 384 316.8 384 288c0-32-4.8-97.6-14.4-176H368c-9.6 0-16-6.4-16-16s6.4-16 16-16h288c9.6 0 16 6.4 16 16s-6.4 16-17.6 16c1.6 0 0 0 0 0z" fill="#2c2d35"></path><path d="M424 480h48c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h24c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h40c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h24c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h40c4.8 0 8 3.2 8 8s-3.2 8-8 8H416V480h8z" fill="#2c2d35"></path></g>
-                </svg>  
+                  <svg
+                    width="64px"
+                    height="64px"
+                    viewBox="-389.12 -389.12 1802.24 1802.24"
+                    className="icon"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="#000000"
+                    stroke="#000000"
+                    strokeWidth="0.01024"
+                  >
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      stroke="#CCCCCC"
+                      strokeWidth="4.096"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        d="M304 592h416l104 296h-624L304 592z m328 128c12.8 0 24-11.2 24-24s-11.2-24-24-24-24 11.2-24 24 11.2 24 24 24z m-256-48c12.8 0 24-11.2 24-24s-11.2-24-24-24-24 11.2-24 24 11.2 24 24 24z m136 112c9.6 0 16-6.4 16-16s-6.4-16-16-16-16 6.4-16 16 6.4 16 16 16z m8-256c-12.8 0-24-11.2-24-24s11.2-24 24-24 24 11.2 24 24-11.2 24-24 24z m104 48c-9.6 0-16-6.4-16-16s6.4-16 16-16 16 6.4 16 16-6.4 16-16 16z"
+                        fill="#1e1721"
+                      ></path>
+                      <path
+                        d="M622.4 112H401.6c9.6 76.8 14.4 142.4 14.4 176 0 35.2-65.6 248-200 592h593.6C673.6 536 608 323.2 608 288c0-33.6 4.8-99.2 14.4-176z m32 0c-9.6 78.4-14.4 144-14.4 176 0 28.8 67.2 248 198.4 580.8 1.6 3.2 1.6 8 1.6 11.2 0 17.6-14.4 32-32 32H214.4c-4.8 0-8 0-11.2-1.6-16-6.4-24-25.6-17.6-41.6C316.8 536 384 316.8 384 288c0-32-4.8-97.6-14.4-176H368c-9.6 0-16-6.4-16-16s6.4-16 16-16h288c9.6 0 16 6.4 16 16s-6.4 16-17.6 16c1.6 0 0 0 0 0z"
+                        fill="#2c2d35"
+                      ></path>
+                      <path
+                        d="M424 480h48c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h24c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h40c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h24c4.8 0 8 3.2 8 8s-3.2 8-8 8H432v48h40c4.8 0 8 3.2 8 8s-3.2 8-8 8H416V480h8z"
+                        fill="#2c2d35"
+                      ></path>
+                    </g>
+                  </svg>
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                   {userId ? (
@@ -57,13 +102,19 @@ export default function Navbar() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href
+                          item.path.some(
+                            (path: string) => pathname?.startsWith(path)
+                          ) || pathname === item.href
                             ? 'border-slate-500 text-gray-900'
                             : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
                           'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'
                         )}
                         aria-current={
-                          item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href ? 'page' : undefined
+                          item.path.some(
+                            (path: string) => pathname?.startsWith(path)
+                          ) || pathname === item.href
+                            ? 'page'
+                            : undefined
                         }
                       >
                         {item.name}
@@ -83,12 +134,10 @@ export default function Navbar() {
                       <span className="text-xs text-gray-700 whitespace-nowrap"></span>
                       <div className="h-8 w-8 rounded-full text-white text-center flex items-center justify-center">
                         <SignedIn>
-                          
-                          <UserButton 
-                          afterSignOutUrl="/sign-in"
-                          showName={true}
+                          <UserButton
+                            afterSignOutUrl="/sign-in"
+                            showName={true}
                           />
-                          
                         </SignedIn>
                         <SignedOut>
                           {/* Signed out users get sign in button */}
@@ -138,12 +187,20 @@ export default function Navbar() {
                     as="a"
                     href={item.href}
                     className={classNames(
-                      item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href
+                      item.path.some(
+                        (path: string) => pathname?.startsWith(path)
+                      ) || pathname === item.href
                         ? 'bg-slate-50 border-slate-500 text-slate-700'
                         : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800',
                       'block pl-3 pr-4 py-2 border-l-4 text-base font-medium'
                     )}
-                    aria-current={item.path.some((path: string) => pathname?.startsWith(path)) || pathname === item.href ? 'page' : undefined}
+                    aria-current={
+                      item.path.some(
+                        (path: string) => pathname?.startsWith(path)
+                      ) || pathname === item.href
+                        ? 'page'
+                        : undefined
+                    }
                   >
                     {item.name}
                   </Disclosure.Button>

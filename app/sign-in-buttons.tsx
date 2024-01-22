@@ -26,7 +26,9 @@ export default function SignInButtons() {
       <div className="container mx-auto space-y-4 h-screen flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold mb-2">Welcome to Bytegram</h1>
         <span className="text-center text-sm text-gray-900">
-          Rageval is an LLM agent evaluation framework that allows you to evaluate your agents in a variety of environments, personas and scenarios.
+          Rageval is an LLM agent evaluation framework that allows you to
+          evaluate your agents in a variety of environments, personas and
+          scenarios.
         </span>
         <Button
           onClick={() => signIn('google')}

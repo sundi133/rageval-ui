@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { sql } from '@vercel/postgres';
 import { Card, Title, Text, Button, Grid } from '@tremor/react';
@@ -14,7 +14,6 @@ export default function IndexPage({
 }: {
   searchParams: { q: string };
 }) {
-  
   const { session } = useClerk();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -34,7 +33,6 @@ export default function IndexPage({
     <div>
       {session ? (
         <main className="p-4 md:p-10 mx-auto max-w-7xl">
-          
           <div className="flex justify-between items-center">
             {' '}
             <div className="relative flex items-center w-full">

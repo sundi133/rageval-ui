@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { sql } from '@vercel/postgres';
 import { Card, Title, Text, Button, Grid } from '@tremor/react';
@@ -8,14 +8,13 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { use, useEffect, useState } from 'react';
 import '../app/globals.css';
 import DatasetList from '../components/DatasetList';
-import { ClerkLoaded, ClerkProvider } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkProvider } from '@clerk/nextjs';
 
 export default function IndexPage({
   searchParams
 }: {
   searchParams: { q: string };
 }) {
-
   const { session } = useClerk();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -31,14 +30,11 @@ export default function IndexPage({
     }
   };
 
-
   return (
     <div>
       <ClerkLoaded>
-
         {session ? (
           <main className="p-4 md:p-10 mx-auto max-w-7xl">
-
             <div className="flex justify-between items-center">
               {' '}
               <div className="relative flex items-center w-full">
@@ -85,7 +81,6 @@ export default function IndexPage({
           <>Loading...</>
         )}
       </ClerkLoaded>
-
     </div>
   );
 }

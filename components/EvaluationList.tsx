@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // You need to install axios if not already installed
 import '../app/globals.css';
@@ -7,7 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@clerk/nextjs';
 import { useClerk } from '@clerk/nextjs';
-import { faCheckCircle, faSpinner, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheckCircle,
+  faSpinner,
+  faTimesCircle
+} from '@fortawesome/free-solid-svg-icons';
 
 function EvaluationList({ searchTerm }: { searchTerm: string }) {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
@@ -16,8 +22,8 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
   const tableBodyCellStyle =
     'px-6 py-4 leading-5 text-center bg-white text-sm text-gray-900 tracking-wider whitespace-no-wrap leading-5';
 
-  const [evaluations, setEvaluations] = useState([]);
-  const [selectedInterview, setSelectedInterview] = useState<any>(null);
+  const [simulations, setSimulations] = useState([]);
+  const [selectedSimulation, setSelectedSimulation] = useState<any>(null);
   const [userMessage, setUserMessage] =
     useState(`No dataset found. Why not create a new dataset? Click the button
   above to get started!`); // Message to display to the user
@@ -33,13 +39,13 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
         setSuccessMessage(1);
         if (session?.lastActiveOrganizationId) {
           setUserMessage(
-            `No llm/rag evaluations found. Why not create a new one ? Add a simiulation to get started in chat simulator`
+            `No evaluations found. Why not create a new one ? Add a evaluation to get started in above button`
           );
         } else {
-            setSuccessMessage(0);
-            setUserMessage(
-                'No organization found. Please create an organization first.'
-            );
+          setSuccessMessage(0);
+          setUserMessage(
+            'No organization found. Please create an organization first.'
+          );
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -60,34 +66,42 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
         setIsLoading(true);
         if (searchTerm.trim() !== '') {
           const searchResponse = await axios.get(
-            `${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/evaluation/search`,{
-                params: {
-                    org_id: session?.lastActiveOrganizationId,
-                    user_id: userId,
-                    search: searchTerm,
-                },
-            });
-          setEvaluations(searchResponse.data);
+            `${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/simulation/search`,
+            {
+              params: {
+                org_id: session?.lastActiveOrganizationId,
+                user_id: userId,
+                search: searchTerm,
+                skip: 0,
+                limit: 100
+              }
+            }
+          );
+          setSimulations(searchResponse.data);
         } else {
-          const response = await axios.get(`${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/evaluation/list`, {
-            params: {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/simulation/list`,
+            {
+              params: {
                 user_id: userId,
                 org_id: session?.lastActiveOrganizationId,
-            },
-          });
-          setEvaluations(response.data);
+                skip: 0,
+                limit: 100
+              }
+            }
+          );
+          setSimulations(response.data);
         }
         setIsLoading(false); // Data has been fetched
         setSuccessMessage(1);
       } catch (error: any) {
-        
         setSuccessMessage(0);
         console.error('Error fetching:', error);
         setIsLoading(false); // Data fetching failed
       }
     };
-    if(session && session?.lastActiveOrganizationId) {
-        fetchData();
+    if (session && session?.lastActiveOrganizationId) {
+      fetchData();
     }
   }, [searchTerm]);
 
@@ -95,9 +109,8 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
     return null;
   }
 
-
   const handleRowClick = (interview: any) => {
-    setSelectedInterview((prevSelectedInterview: any) => {
+    setSelectedSimulation((prevSelectedInterview: any) => {
       if (prevSelectedInterview && prevSelectedInterview.id === interview.id) {
         return null; // Hide details if the same row is clicked again
       } else {
@@ -117,99 +130,173 @@ function EvaluationList({ searchTerm }: { searchTerm: string }) {
       </div>
     );
   }
-  
+
   return (
     <div className="container min-w-full" style={{ marginTop: '16px' }}>
-      {evaluations.length === 0 ? (
-        <div className="text-sm">
-          <p>
-            {successMessage === 1 ? (
-              <>{userMessage}</>
-            ) : (
-              <div>
-                {userMessage}
-                <Link href={'/create-organization'} className="text-blue-500">
-                  {' '}
-                  Click here to get started
-                </Link>
-              </div>
-            )}
-          </p>
+      {simulations.length === 0 ? (
+        <div>
+          <div className="text-sm">
+            <p>
+              {successMessage === 1 ? (
+                <>{userMessage}</>
+              ) : (
+                <div>
+                  {userMessage}
+                  <Link href={'/create-organization'} className="text-blue-500">
+                    {' '}
+                    Click here to get started
+                  </Link>
+                </div>
+              )}
+            </p>
+          </div>
+
+          <div className="text-center mt-10" style={{ marginTop: '32px' }}>
+            <Link href="/add/simulator">
+              <button
+                className="bg-gray-900 mt-5 text-white px-8 py-4 text-lg font-semibold rounded hover:bg-gray-700 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50"
+                disabled={!session}
+              >
+                <span className="relative inline-flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                  &nbsp; Create Evaluation
+                </span>
+              </button>
+            </Link>
+          </div>
         </div>
       ) : (
-        <table className="container min-w-full border-collapse border table-auto" style={{ marginTop: '16px' }}>
-            <thead>
-                <tr>
-                    <th className={tableHeaderCellStyle}>Timestamp</th>
-                    <th className={tableHeaderCellStyle}>Id</th>
-                    <th className={tableHeaderCellStyle}>Score</th>
-                    <th className={tableHeaderCellStyle}>Evaluation</th>
-                    <th className={tableHeaderCellStyle}>Dataset</th>
-                    <th className={tableHeaderCellStyle}>Endpoint</th>
-                    <th className={tableHeaderCellStyle}>Status</th>
-                    <th className={tableHeaderCellStyle}>View</th>
-                </tr>
-            </thead>
-            <tbody className="bg-white">
-                {evaluations.map((evaluation:any) => (
-                <React.Fragment key={`${evaluation.simulation_id}-${evaluation.last_updated}`}>
-                    <tr key={`${evaluation.id}-${evaluation.last_updated}`} onClick={() => handleRowClick(evaluation)}>
-
-                        <td className={tableBodyCellStyle}>{new Date(evaluation.last_updated).toLocaleString()}</td>
-                        <td className={tableBodyCellStyle}>{evaluation.evaluation_id}</td>
-                        <td className={tableBodyCellStyle}>{evaluation.average_score.toFixed(4)}</td>
-                        {/* <td className={tableBodyCellStyle}>
-                            {dataset.status === 'completed' && <FontAwesomeIcon icon={faCheckCircle} />}
-                            {dataset.status === 'in_progress' && <FontAwesomeIcon icon={faSpinner} spin />}
-                            {dataset.status === 'error' && <FontAwesomeIcon icon={faTimesCircle} />}
-                            {(!dataset.status || dataset.status === "") && ""}
-                        </td> */}
-                        <td className={tableBodyCellStyle}>{evaluation.simulation_name}</td>
-                        <td className={tableBodyCellStyle}>{evaluation.dataset_name}</td>
-                        <td className={tableBodyCellStyle}>{evaluation.endpoint_name}</td>
-                        <td className={tableBodyCellStyle}>
-                            {evaluation.status === 'completed' && <FontAwesomeIcon icon={faCheckCircle} style={{ color: 'green' }} />}
-                            {evaluation.status === 'in_progress' && <FontAwesomeIcon icon={faSpinner} spin style={{ color: 'blue' }} />}
-                            {evaluation.status === 'error' && <FontAwesomeIcon icon={faTimesCircle} style={{ color: 'red' }} />}
-                            {(!evaluation.status || evaluation.status === "") && ""}
-                        </td>
-                        <td className={tableBodyCellStyle}>
-                            <Link href={`/view/evaluation/${evaluation.evaluation_profile_id}`} rel="noopener noreferrer">
-                            <FontAwesomeIcon
-                                icon={faChevronRight}
-                                className="text-sm text-gray-900 hover:text-blue-500"
-                            />
-                            </Link>
-                        </td>
-                    </tr>
-                    {/* Details row */}
-                    {selectedInterview &&
-                    selectedInterview.id === evaluation.id && (
-                      <tr>
-                        <td colSpan={6} className={tableBodyCellStyle}>
-                          {/* Display additional details based on the selected interview */}
-                          <div>
-                            <strong>Simulation ID:</strong> {evaluation.evaluation_profile_id}
-                          </div>
-                          <div>
-                            <strong>Average Score:</strong> {evaluation.average_score}
-                          </div>
-                          <div>
-                            <strong>Dataset Name:</strong> {evaluation.dataset_name}
-                          </div>
-                          <div>
-                            <strong>Endpoint Name:</strong> {evaluation.endpoint_name}
-                          </div>
-                          <div>
-                            <strong>Simulation Name:</strong> {evaluation.simulation_name}
-                          </div>
-                        </td>
-                      </tr>
+        <table
+          className="container min-w-full border-collapse border table-auto"
+          style={{ marginTop: '16px' }}
+        >
+          <thead>
+            <tr>
+              <th className={tableHeaderCellStyle}>Timestamp</th>
+              <th className={tableHeaderCellStyle}>Evaluation Id</th>
+              <th className={tableHeaderCellStyle}>Evaluation Name</th>
+              <th className={tableHeaderCellStyle}>Number of Users</th>
+              <th className={tableHeaderCellStyle}>Dataset</th>
+              <th className={tableHeaderCellStyle}>Endpoint</th>
+              <th className={tableHeaderCellStyle}>Status</th>
+              <th className={tableHeaderCellStyle}>View</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {simulations.map((simulation: any) => (
+              <React.Fragment
+                key={`${simulation.ts}-${simulation.simulation_id}`}
+              >
+                <tr
+                  key={`${simulation.ts}-${simulation.simulation_id}`}
+                  onClick={() => handleRowClick(simulation)}
+                >
+                  <td className={tableBodyCellStyle}>
+                    {new Date(simulation.ts).toLocaleString()}
+                  </td>
+                  <td className={tableBodyCellStyle}>{simulation.id}</td>
+                  <td className={tableBodyCellStyle}>{simulation.name}</td>
+                  <td className={tableBodyCellStyle}>{simulation.num_users}</td>
+                  <td className={tableBodyCellStyle}>
+                    <Link
+                      href={`/view/datasets/${simulation.dataset_id}`}
+                      rel="noopener noreferrer"
+                    >
+                      <span className="relative text-blue-500 inline-flex items-center">
+                        {simulation.dataset_id}
+                      </span>
+                    </Link>
+                  </td>
+                  <td className={tableBodyCellStyle}>
+                    <Link
+                      href={`/view/endpoints/${simulation.endpoint_url_id}`}
+                      rel="noopener noreferrer"
+                    >
+                      <span className="relative text-blue-500 inline-flex items-center">
+                        {simulation.endpoint_url_id}
+                      </span>
+                    </Link>
+                  </td>
+                  <td className={tableBodyCellStyle}>
+                    {simulation.status === 'completed' && (
+                      <FontAwesomeIcon
+                        icon={faCheckCircle}
+                        style={{ color: 'green' }}
+                      />
                     )}
-                </React.Fragment>
-                ))}
-            </tbody>
-            </table>
+                    {simulation.status === 'in_progress' && (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        style={{ color: 'blue' }}
+                      />
+                    )}
+                    {simulation.status === 'error' && (
+                      <FontAwesomeIcon
+                        icon={faTimesCircle}
+                        style={{ color: 'red' }}
+                      />
+                    )}
+                    {(!simulation.status || simulation.status === '') && ''}
+                  </td>
+                  <td className={tableBodyCellStyle}>
+                    <Link
+                      href={`/view/evaluation/${simulation.id}`}
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon
+                        icon={faChevronRight}
+                        className="text-sm text-gray-900 hover:text-blue-500"
+                      />
+                    </Link>
+                  </td>
+                </tr>
+                {/* Details row */}
+                {selectedSimulation &&
+                  selectedSimulation.id === simulation.id && (
+                    <tr>
+                      <td colSpan={6} className={tableBodyCellStyle}>
+                        {/* Display additional details based on the selected interview */}
+                        <div>
+                          <strong>Evaluation ID:</strong>{' '}
+                          {simulation.simulation_id}
+                        </div>
+                        <div>
+                          <strong>Average Score:</strong>{' '}
+                          {simulation.average_score}
+                        </div>
+                        <div>
+                          <strong>Dataset Name:</strong>{' '}
+                          {simulation.dataset_name}
+                        </div>
+                        <div>
+                          <strong>Endpoint Name:</strong>{' '}
+                          {simulation.endpoint_name}
+                        </div>
+                        <div>
+                          <strong>Evaluation Name:</strong>{' '}
+                          {simulation.simulation_name}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

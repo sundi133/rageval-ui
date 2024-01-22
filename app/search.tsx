@@ -20,7 +20,5 @@ export default function Search({ disabled }: { disabled?: boolean }) {
     });
   }
 
-  return (
-    <div></div>
-  );
+  return <div></div>;
 }

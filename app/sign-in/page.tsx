@@ -9,7 +9,11 @@ export default function Page() {
         LLM / RAG Agent Evaluation Framework
       </span>
       <div className="container flex justify-center items-center mt-16">
-        <SignIn afterSignInUrl={"/add/dataset"} afterSignUpUrl={"/add/dataset"} redirectUrl={"/add/dataset"} />
+        <SignIn
+          afterSignInUrl={'/add/dataset'}
+          afterSignUpUrl={'/add/dataset'}
+          redirectUrl={'/add/dataset'}
+        />
       </div>
     </div>
   );

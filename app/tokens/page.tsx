@@ -19,18 +19,20 @@ export default function Home() {
   const [keys, setKeys] = useState([]);
   const [error, setError] = useState('');
   const { isLoaded, userId, sessionId, getToken } = useAuth();
-  const [name , setName] = useState('');
+  const [name, setName] = useState('');
 
-  useEffect( ()  => {
+  useEffect(() => {
     const fetchData = async () => {
       if (session) {
         const tokens = await axios.get(
-          `${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/tokens`,{
-              params: {
-                  org_id: session?.lastActiveOrganizationId,
-                  user_id: userId,
-              },
-          });
+          `${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/tokens`,
+          {
+            params: {
+              org_id: session?.lastActiveOrganizationId,
+              user_id: userId
+            }
+          }
+        );
         setKeys(tokens.data);
       }
     };
@@ -47,11 +49,13 @@ export default function Home() {
     formData.append('org_id', session?.lastActiveOrganizationId ?? '');
     formData.append('user_id', userId ?? '');
     formData.append('name', name ?? '');
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/token/add`, formData);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_RAGEVAL_BACKEND_URL}/api/token/add`,
+      formData
+    );
 
     if (response.status === 200) {
       setSuccessMessage(response.data.message);
-
     } else {
       setError(response.data.message);
     }
@@ -75,9 +79,10 @@ export default function Home() {
             }}
           >
             <div className="container mb-4 flex">
-
               <div className="w-1/2 pr-2">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Name:
+                </label>
                 <input
                   type="text"
                   value={name}
@@ -86,7 +91,6 @@ export default function Home() {
                   required
                 />
               </div>
-
             </div>
             {successMessage && (
               <div className="container mb-4 flex text-sm text-gray-500">
@@ -99,7 +103,6 @@ export default function Home() {
                 {error}
               </div>
             )}
-
           </form>
           <Button
             className="bg-gray-900 hover:bg-gray-700 text-white text-sm py-2 border border-gray-900 rounded focus:outline-none focus:shadow-outline"
@@ -122,7 +125,6 @@ export default function Home() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Token
                   </th>
-                  
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">

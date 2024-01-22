@@ -21,15 +21,14 @@ export default function IndexPage() {
     return null;
   }
 
-  if(!id) {
-    return <div>Loading...</div>
+  if (!id) {
+    return <div>Loading...</div>;
   }
 
   return (
     <main className={`mx-auto max-w-7xl`}>
-      <Navbar/>
-      <Details datagen_id={id} size='7xl' />        
+      <Navbar />
+      <Details datagen_id={id} size="7xl" />
     </main>
   );
 }
-

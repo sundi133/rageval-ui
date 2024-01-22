@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[6207],{9653:function(n,_,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/view/evaluation/details",function(){return u(8526)}])}},function(n){n.O(0,[5121,2066,1664,5675,1303,2621,8526,2888,9774,179],function(){return n(n.s=9653)}),_N_E=n.O()}]);

@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST='{"view/evaluation/line-chart.js -> react-apexcharts":{"id":7229,"files":["static/chunks/6c44d60f.dd52220aa5829453.js","static/chunks/7229.daeea0855cfac85c.js"]}}';
+self.__REACT_LOADABLE_MANIFEST='{"view/assessment/line-chart.js -> react-apexcharts":{"id":7229,"files":["static/chunks/6c44d60f.dd52220aa5829453.js","static/chunks/7229.daeea0855cfac85c.js"]}}';
