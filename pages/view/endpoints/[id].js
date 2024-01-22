@@ -26,7 +26,7 @@ export default function IndexPage() {
   }
 
   return (
-    <main>
+    <main className={`mx-auto max-w-7xl`}>
       <Navbar/>
       <Details llm_endpoint_id={id} />        
     </main>

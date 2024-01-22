@@ -22,10 +22,12 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className="h-full bg-white">
         <body className="h-full">
-          <Suspense>
-            <Nav />
-          </Suspense>
-          <AuthProvider>{children}</AuthProvider>
+          <main className="mx-auto max-w-7xl">
+            <Suspense>
+              <Nav />
+            </Suspense>
+            <AuthProvider>{children}</AuthProvider>
+          </main>
         </body>
       </html>
     </ClerkProvider>

@@ -304,7 +304,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                                                             <br/>
                                                             <strong>Answer:</strong> {JSON.parse(data.chat_messages).question_answer.answer}
                                                             <br/>
-                                                            <strong>LLM Endpoint Answer:</strong> {data.endpoint_response}
+                                                            <strong>App Response:</strong> {data.endpoint_response}
                                                             <br/>
                                                             <strong>Score: </strong>{' '}
                                                             {data.score.toFixed(4)}
@@ -322,7 +322,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                                                                     <strong>Follow-up Answer {index + 1}: </strong>{' '}
                                                                     {JSON.parse(data.chat_messages).question_answer[`follow_up_answer_${index + 1}`]}
                                                                     <br/>
-                                                                    <strong>LLM Endpoint Follow-up Answer {index + 1}: </strong>{' '}
+                                                                    <strong>App Response Follow-up Answer {index + 1}: </strong>{' '}
                                                                     {data.endpoint_response}
                                                                     <br/>
                                                                     <strong>Score: </strong>{' '}
