@@ -3,10 +3,15 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const LineChart = ({ data_series, title }) => {
+const LineChart = ({ data_series, retrieval_series, title }) => {
   if (!data_series || !data_series.length || !data_series[0].data) {
     return <div>No data available</div>;
   }
+
+  if (!retrieval_series || !retrieval_series.length) {
+    return <div>No retrieval data available</div>;
+  }
+
   const options = {
     chart: {
       type: 'line'
@@ -18,7 +23,12 @@ const LineChart = ({ data_series, title }) => {
       tickAmount: 5,
       labels: {
         formatter: function (value) {
-          return value ? value.toFixed(4) : 0;
+          if (value) {
+            return value.toFixed(4);
+          } else {
+            return 0;
+          }
+          //return value ? value.toFixed(4) : 0;
         }
       }
     },
@@ -28,8 +38,7 @@ const LineChart = ({ data_series, title }) => {
     },
     stroke: {
       curve: 'smooth',
-      width: 2,
-      colors: ['#1A202C']
+      width: 4,
     },
     tooltip: {
       enabled: true,
@@ -63,10 +72,16 @@ const LineChart = ({ data_series, title }) => {
     }
   };
 
+  const combinedSeries = [
+    ...data_series,
+    ...retrieval_series
+  ];
+  console.log(combinedSeries);
+
   return (
     <Chart
       options={options}
-      series={data_series}
+      series={combinedSeries}
       type="line"
       height={300}
       style={{ marginTop: '4px' }}

@@ -27,6 +27,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
   const [errorType, setErrorType] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [average_score, setAverageScore] = useState(0);
+  const [mean_min_retrieval_score, setMeanMinRetrievalScore] = useState(0);
   const [dataset_name, setDatasetName] = useState('');
   const [endpoint_name, setEndpointName] = useState('');
   const [last_updated, setLastUpdated] = useState('');
@@ -91,7 +92,6 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
       );
 
       const data = response.data;
-      console.log(data); // Handle the retrieved data as needed
       setQaData(data);
     } catch (error) {
       console.error('Error fetching QA data:', error);
@@ -120,12 +120,12 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
       setLastUpdated(data.last_updated);
       setNumberOfEvaluations(data.number_of_evaluations);
       setAverageScore(data.average_score);
+      setMeanMinRetrievalScore(data.min_retrieval_score ?? 0);
       setDatasetName(data.dataset_name);
       setEndpointName(data.endpoint_name);
       setDistinctUsers(data.distinct_users);
       setEvaluationRunsScoreData(response.data);
       setRunIds(response.data.map((data) => data.run_id));
-      console.log(response.data);
       if (!run_id) {
         setRunId(response.data[0].run_id);
       }
@@ -154,10 +154,21 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
     return isNaN(averageScore) ? 'N/A' : averageScore.toFixed(4);
   };
 
+  const calculateRetrievalAverageScore = (data) => {
+    // Use the scores available in the loop to calculate the average
+    // For example, assuming scores are available in an array called 'scores'
+    const scores = [
+      data.min_retrieval_score != null ? data.min_retrieval_score.toFixed(4) : 0,
+    ];    
+    
+    const averageScore = scores.reduce((sum, score) => sum + parseFloat(score), 0) / scores.length;
+
+    return isNaN(averageScore) ? 'N/A' : averageScore.toFixed(4);
+  };
+
   useEffect(() => {
     fetchEvaluationDetails();
     fetchChatData();
-    console.log(run_id);
     setRunId(run_id);
   }, [session, run_id, scoreFilter]);
 
@@ -179,6 +190,7 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                 <Dashboard
                   number_of_evaluations={number_of_evaluations}
                   mean_score={average_score.toFixed(4)}
+                  mean_min_retrieval_score={mean_min_retrieval_score.toFixed(4)}
                   distinct_users_simulated={distinct_users}
                   evaluations={evaluationRunsScoreData}
                   total_simulations={run_ids.length}
@@ -271,28 +283,46 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                     onClick={toggleSortOrder}
                     style={{ cursor: 'pointer' }}
                   >
-                    Mean Score
+                    Response Accuracy
                     {sortOrder === 'asc' ? ' ▲' : ' ▼'}
                   </th>
+                  <th
+                    className={tableHeaderCellStyle}
+                    onClick={toggleSortOrder}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    Retrieval Accuracy
+                    {sortOrder === 'asc' ? ' ▲' : ' ▼'}
+                  </th>
+
                   <th className={tableHeaderCellStyle}>Reference Chunk</th>
                 </tr>
               </thead>
               <tbody>
-                {qaData.map((data) => (
-                  <Fragment key={data.id}>
-                    {expandedReference === data.id && (
+                {qaData.map((data, index) => (
+                  <Fragment key={index}>
+                    {expandedReference === index && (
                       <tr className="border-b">
-                        <td colSpan={4} className={tableBodyExpandedCellStyle}>
-                          <div className="text-sm">
-                            <p>
-                              <strong>Reference Chunk:</strong>
+                        <td colSpan={4} className={`${tableBodyCellStyle} p-4`}>
+                          <div className="text-sm mb-4">
+                            <strong className="text-blue-600">Reference Chunk:</strong>
+                            <p className="mt-2 text-gray-700">
+                              {data.reference_chunk ? (data.reference_chunk) : 'N/A'}
                             </p>
-                            <p>{data.reference_chunk}</p>
+                          </div>
+                      
+                          <div className="text-sm text-wrap justify-start">
+                            <strong className="text-blue-600">Chunks Retrieved:</strong>
+                            <div className="mt-2 text-gray-700">
+                              {data.chunks_retrieved!==null ? (data.chunks_retrieved.map((chunk, chunkIndex) => (
+                                <p key={chunkIndex} className="mb-1"><span className='font-bold'>Chunk {chunkIndex + 1}: </span>{chunk}</p>
+                              ))): 'N/A'}
+                            </div>
                           </div>
                         </td>
                       </tr>
                     )}
-                    <tr className="border-b">
+                    <tr className="border-b" id={index}>
                       <td
                         className={tableBodyCellStyle}
                         style={{ 'vertical-align': 'top' }}
@@ -376,15 +406,21 @@ const DatasetDetails = ({ evaluation_id: evaluation_id }) => {
                         className={tableBodyCellStyle}
                         style={{ 'vertical-align': 'top' }}
                       >
+                        {calculateRetrievalAverageScore(data)}
+                      </td>
+                      <td
+                        className={tableBodyCellStyle}
+                        style={{ 'vertical-align': 'top' }}
+                      >
                         <button
                           className="text-blue-500 underline cursor-pointer"
                           onClick={() =>
                             setExpandedReference(
-                              expandedReference === data.id ? null : data.id
+                              expandedReference === index ? null : index
                             )
                           }
                         >
-                          {expandedReference === data.id
+                          {expandedReference === index
                             ? 'Collapse Reference'
                             : 'Expand Reference'}
                         </button>

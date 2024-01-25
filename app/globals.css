@@ -34,3 +34,8 @@
     transform: rotate(360deg);
   }
 }
+
+.text-wrap {
+    word-wrap: break-word;
+    white-space: normal;
+  }

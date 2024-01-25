@@ -5,6 +5,7 @@ import LineChart from './line-chart';
 export function Dashboard({
   number_of_evaluations,
   mean_score,
+  mean_min_retrieval_score,
   distinct_users_simulated,
   evaluations,
   total_simulations
@@ -26,8 +27,8 @@ export function Dashboard({
         return {
           date: date,
           averageScore: evaluation.average_score,
-          simulationRunId: evaluation.simulation_run_id
-          // Include other fields as needed
+          simulationRunId: evaluation.run_id,
+          retreivalMinScore: evaluation.min_retrieval_score ?? 0
         };
       })
     : [];
@@ -40,10 +41,21 @@ export function Dashboard({
 
   const series = [
     {
-      name: 'Scores per Simulation Run',
+      name: 'Response Accuracy',
       data: data.map((item) => ({
         x: new Date(item.date).toLocaleString('en-US'),
         y: item.averageScore.toFixed(4),
+        simulationRunId: item.simulationRunId
+      }))
+    }
+  ];
+
+  const retrievalSeries = [
+    {
+      name: 'Retreival Accuracy',
+      data: data.map((item) => ({
+        x: new Date(item.date).toLocaleString('en-US'),
+        y: item.retreivalMinScore.toFixed(4),
         simulationRunId: item.simulationRunId
       }))
     }
@@ -64,9 +76,15 @@ export function Dashboard({
         </div>
         <div className="card bg-gradient-to-r from-gray-700 to-gray-900 text-white p-6 rounded-xl shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
           <div className="flex items-center justify-between">
-            <span className="text-sm">Mean Score</span>
+            <span className="text-sm">Mean Response Accuracy</span>
           </div>
           <h2 className="text-2xl font-bold mt-2">{mean_score}</h2>
+        </div>
+        <div className="card bg-gradient-to-r from-gray-700 to-gray-900 text-white p-6 rounded-xl shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Mean Retrieval Accuracy</span>
+          </div>
+          <h2 className="text-2xl font-bold mt-2">{mean_min_retrieval_score}</h2>
         </div>
         <div className="card bg-gradient-to-r from-gray-700 to-gray-900 text-white p-6 rounded-xl shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
           <div className="flex items-center justify-between">
@@ -78,7 +96,7 @@ export function Dashboard({
 
       <div className="chart-container mt-8">
         <div style={{ width: '100%' }}>
-          <LineChart data_series={series} title="Scores per Simulation Run" />
+          <LineChart data_series={series} retrieval_series={retrievalSeries} title="Accuracy score per Simulation Run" />
         </div>
       </div>
     </div>
